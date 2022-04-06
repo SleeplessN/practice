@@ -22,11 +22,25 @@
           target.backgroundColor = 'black';
           target.color = 'white';
           this.value = 'Day';
+
+          var alist = document.querySelectorAll('a');
+          var i = 0;
+          while(i<alist.length){
+            alist[i].style.color = 'powderblue';
+            i=i+1;
+          }
         }
         else{
           target.backgroundColor = 'white';
           target.color = 'black';
           this.value = 'Night';
+
+          var alist = document.querySelectorAll('a');
+          var i = 0;
+          while(i<alist.length){
+              alist[i].style.color = 'blue';
+              i=i+1;
+          }
         }
         "
         >
