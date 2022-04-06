@@ -16,16 +16,17 @@
       <div id="article">
         <h2>JavaScript</h2>
         <p>자바스크립트(영어: JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹 브라우저 내에서 주로 사용하며, 다른 응용 프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. 또한 Node.js와 같은 런타임 환경과 같이 서버 프로그래밍에도 사용되고 있다.</p>
-        <input id="night_day" type ="button" value = "Night" onclick="
-        if(document.querySelector('#night_day').value ==='Night'){
-        document.querySelector('body').style.backgroundColor = 'black';
-        document.querySelector('body').style.color = 'white';
-        document.querySelector('#night_day').value = 'Day';
+        <input type ="button" value = "Night" onclick="
+        var target = document.querySelector('body').style;
+        if(this.value ==='Night'){
+          target.backgroundColor = 'black';
+          target.color = 'white';
+          this.value = 'Day';
         }
         else{
-        document.querySelector('body').style.backgroundColor = 'white';
-        document.querySelector('body').style.color = 'black';
-        document.querySelector('#night_day').value = 'Night';
+          target.backgroundColor = 'white';
+          target.color = 'black';
+          this.value = 'Night';
         }
         "
         >
