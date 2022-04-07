@@ -4,6 +4,35 @@
     <meta charset="UTF-8">
     <title>WEB - JavaScript</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+      function NightDayHandler(self){
+        var target = document.querySelector('body').style;
+        if(self.value ==='Night'){
+          target.backgroundColor = 'black';
+          target.color = 'white';
+          self.value = 'Day';
+
+          var alist = document.querySelectorAll('a');
+          var i = 0;
+          while(i<alist.length){
+            alist[i].style.color = 'powderblue';
+            i=i+1;
+          }
+        }
+        else{
+          target.backgroundColor = 'white';
+          target.color = 'black';
+          self.value = 'Night';
+
+          var alist = document.querySelectorAll('a');
+          var i = 0;
+          while(i<alist.length){
+              alist[i].style.color = 'blue';
+              i=i+1;
+          }
+        }
+      }
+    </script>
   </head>
   <body>
     <h1><a href="index.html">WEB</a></h1>
@@ -17,31 +46,7 @@
         <h2>JavaScript</h2>
         <p>자바스크립트(영어: JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹 브라우저 내에서 주로 사용하며, 다른 응용 프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. 또한 Node.js와 같은 런타임 환경과 같이 서버 프로그래밍에도 사용되고 있다.</p>
         <input type ="button" value = "Night" onclick="
-        var target = document.querySelector('body').style;
-        if(this.value ==='Night'){
-          target.backgroundColor = 'black';
-          target.color = 'white';
-          this.value = 'Day';
-
-          var alist = document.querySelectorAll('a');
-          var i = 0;
-          while(i<alist.length){
-            alist[i].style.color = 'powderblue';
-            i=i+1;
-          }
-        }
-        else{
-          target.backgroundColor = 'white';
-          target.color = 'black';
-          this.value = 'Night';
-
-          var alist = document.querySelectorAll('a');
-          var i = 0;
-          while(i<alist.length){
-              alist[i].style.color = 'blue';
-              i=i+1;
-          }
-        }
+        NightDayHandler(this);
         "
         >
       </div>
