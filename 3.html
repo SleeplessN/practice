@@ -5,33 +5,38 @@
     <title>WEB - JavaScript</title>
     <link rel="stylesheet" href="style.css">
     <script>
-      function NightDayHandler(self){
-        var target = document.querySelector('body').style;
-        if(self.value ==='Night'){
-          target.backgroundColor = 'black';
-          target.color = 'white';
-          self.value = 'Day';
-
-          var alist = document.querySelectorAll('a');
-          var i = 0;
-          while(i<alist.length){
-            alist[i].style.color = 'powderblue';
+      function BodySetColor(color){
+        document.querySelector('body').style.color = color;
+      }
+      function BodySetBackgroundColor(color){
+        document.querySelector('body').style.backgroundColor = color;
+      }
+      function LinkSetColor(color){
+        var alist = document.querySelectorAll('a');
+        var i = 0;
+        while(i<alist.length){
+            alist[i].style.color = color;
             i=i+1;
-          }
-        }
-        else{
-          target.backgroundColor = 'white';
-          target.color = 'black';
-          self.value = 'Night';
-
-          var alist = document.querySelectorAll('a');
-          var i = 0;
-          while(i<alist.length){
-              alist[i].style.color = 'blue';
-              i=i+1;
-          }
         }
       }
+      function NightDayHandler(self){
+        var target = document.querySelector('body');
+        if(self.value ==='Night'){
+          BodySetBackgroundColor('black');
+          BodySetColor('white');
+          self.value = 'Day';
+
+          LinkSetColor('powderblue');
+          }
+         else{
+          BodySetBackgroundColor('white');
+          BodySetColor('black');
+          self.value = 'Night';
+
+          LinkSetColor('blue');
+          }
+      }
+
     </script>
   </head>
   <body>
