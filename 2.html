@@ -4,6 +4,43 @@
     <meta charset="UTF-8">
     <title>WEB - CSS</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+      var Body = {
+        setColor : function(color){
+          document.querySelector('body').style.color = color;
+        } ,
+        setBackgroundColor : function(color){
+          document.querySelector('body').style.backgroundColor = color;
+        }
+      }
+      var Links = {
+        setColor : function(color){
+          var alist = document.querySelectorAll('a');
+          var i = 0;
+          while(i<alist.length){
+              alist[i].style.color = color;
+              i++;
+          }
+        }
+      }
+      function NightDayHandler(self){
+        var target = document.querySelector('body');
+        if(self.value ==='Night'){
+          Body.setBackgroundColor('black');
+          Body.setColor('white');
+          self.value = 'Day';
+
+          Links.setColor('powderblue');
+          }
+         else{
+          Body.setBackgroundColor('white');
+          Body.setColor('black');
+          self.value = 'Night';
+
+          Links.setColor('blue');
+          }
+      }
+    </script>
   </head>
   <body>
     <h1><a href="index.html">WEB</a></h1>
@@ -16,6 +53,10 @@
       <div id="article">
         <h2>CSS</h2>
         <p>종속형 시트 또는 캐스케이딩 스타일 시트(Cascading Style Sheets, CSS)는 마크업 언어가 실제 표시되는 방법을 기술하는 스타일 언어(style sheet language)로[1], HTML과 XHTML에 주로 쓰이며, XML에서도 사용할 수 있다. W3C의 표준이며, 레이아웃과 스타일을 정의할 때의 자유도가 높다.</p>
+        <input type ="button" value = "Night" onclick="
+        NightDayHandler(this);
+        "
+        >
       </div>
     </div>
   </body>
