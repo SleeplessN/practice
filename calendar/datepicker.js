@@ -20,16 +20,8 @@ const myPicker = function ($picker) {
 
   // input에 날짜표시
   $calendarDate.addEventListener("click", function (e) {
-    if (
-      e.target.className === "day" ||
-      e.target.className === "prev-day" ||
-      e.target.className === "next-day"
-    ) {
-      $picker.value = sessionStorage.getItem("clickDate");
-      sessionStorage.removeItem("clickDate");
-      $calendar.style.display = "none";
-    }
-    e.target.classList.add("pick-mark");
+    $picker.value = e.target.getAttribute("value");
+    $calendar.style.display = "none";
   });
 
   // 다른데 클릭시 달력 사라지도록

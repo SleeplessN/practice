@@ -107,7 +107,14 @@ const myCalendar = ($container) => {
         i <= prevMonthLastDate;
         i++
       ) {
+        let date = new Date(currentYear, currentMonth - 1, i);
+        let dateValue = new Date(
+          date.getTime() - date.getTimezoneOffset() * 60000
+        )
+          .toISOString()
+          .substring(0, 10);
         let prevRender = document.createElement("div");
+        prevRender.setAttribute("value", `${dateValue}`);
         prevRender.classList.add("prev-day");
         prevRender.innerText = i;
         $calendarDate.append(prevRender);
@@ -123,7 +130,14 @@ const myCalendar = ($container) => {
     const thisMonthLastDate = thisLastDate.getDate();
 
     for (let i = 1; i <= thisMonthLastDate; i++) {
+      let date = new Date(currentYear, currentMonth, i);
+      let dateValue = new Date(
+        date.getTime() - date.getTimezoneOffset() * 60000
+      )
+        .toISOString()
+        .substring(0, 10);
       let thisRender = document.createElement("div");
+      thisRender.setAttribute("value", `${dateValue}`);
       thisRender.classList.add("day");
       thisRender.innerText = i;
       $calendarDate.append(thisRender);
@@ -137,7 +151,14 @@ const myCalendar = ($container) => {
     const nextMonthDay = nextMonth.getDay();
     if (nextMonthDay > 0) {
       for (let i = 1; i <= 7 - nextMonthDay; i++) {
+        let date = new Date(currentYear, currentMonth + 1, i);
+        let dateValue = new Date(
+          date.getTime() - date.getTimezoneOffset() * 60000
+        )
+          .toISOString()
+          .substring(0, 10);
         let nextRender = document.createElement("div");
+        nextRender.setAttribute("value", `${dateValue}`);
         nextRender.classList.add("next-day");
         nextRender.innerText = i;
         $calendarDate.append(nextRender);
@@ -174,49 +195,7 @@ const myCalendar = ($container) => {
   });
   // 클릭시 현재 날짜 표시
   $calendarDate.addEventListener("click", function (e) {
-    if (e.target.className === "prev-day") {
-      if (currentMonth < 10) {
-        clickDate = `${currentYear}-0${currentMonth}-${e.target.innerText}`;
-      } else {
-        clickDate = `${currentYear}-${currentMonth}-${e.target.innerText}`;
-      }
-    }
-
-    if (e.target.className === "day") {
-      if (e.target.innerText < 10) {
-        if (currentMonth + 1 < 10) {
-          clickDate = `${currentYear}-0${currentMonth + 1}-0${
-            e.target.innerText
-          }`;
-        } else {
-          clickDate = `${currentYear}-${currentMonth + 1}-0${
-            e.target.innerText
-          }`;
-        }
-      } else {
-        if (currentMonth + 1 < 10) {
-          clickDate = `${currentYear}-0${currentMonth + 1}-${
-            e.target.innerText
-          }`;
-        } else {
-          clickDate = `${currentYear}-${currentMonth + 1}-${
-            e.target.innerText
-          }`;
-        }
-      }
-    }
-
-    if (e.target.className === "next-day") {
-      if (currentMonth + 2 < 10) {
-        clickDate = `${currentYear}-0${currentMonth + 2}-0${
-          e.target.innerText
-        }`;
-      } else {
-        clickDate = `${currentYear}-${currentMonth + 2}-0${e.target.innerText}`;
-      }
-    }
-    console.log(clickDate);
-    sessionStorage.setItem("clickDate", clickDate);
+    console.log(e.target.getAttribute("value"));
   });
 };
 
