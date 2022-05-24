@@ -15,17 +15,24 @@ const NewsList = ($categoryList) => {
     `;
   $article.after($scrollObserver);
 
+  const changeCategory = () => {
+    firstPageLoaded = false;
+    page = 1;
+    loadNews();
+  };
+  let firstPageLoaded = false;
   let page = 1;
   const loadNews = async () => {
     try {
-      const apiKey = "1112deff5a7c4a01960a47aa5d78db1d";
+      const apiKey = "e2ca29d899134449a873aafd5310b5fc";
       const pageSize = 5;
-      let category = news.category;
+      const category = news.category;
       const API_URL = `https://newsapi.org/v2/top-headlines?country=kr&category=${
         category === "all" ? "" : category
       }&page=${page}&pageSize=${pageSize}&apiKey=${apiKey}`;
       const response = await axios.get(API_URL);
       showNews(response.data.articles);
+      firstPageLoaded = true;
     } catch (error) {
       console.error(error);
     } finally {
@@ -60,18 +67,24 @@ const NewsList = ($categoryList) => {
   window.addEventListener("DOMContentLoaded", () => {
     loadNews();
   });
-  subscribe(loadNews);
+  subscribe(changeCategory);
 
   //무한스크롤
-  // const fetchMore = async () => {
-  //   page++;
-  //   await loadNews();
-  // };
+  const fetchMore = () => {
+    if (firstPageLoaded === true) {
+      page++;
+      loadNews();
+    }
+  };
 
-  // const fetchMoreObserver = new IntersectionObserver(([isIntersecting]) => {
-  //   if (isIntersecting) fetchMore();
-  // });
-  // fetchMoreObserver.observe($scrollObserver);
+  const fetchMoreObserver = new IntersectionObserver((entry) => {
+    if (entry[0].isIntersecting) fetchMore();
+  });
+  fetchMoreObserver.observe($scrollObserver);
+
+  // const fetchMoreObserver = new IntersectionObserver((entry) =>
+  //   console.log(entry[0].isIntersecting)
+  // );
 };
 
 export default NewsList;
