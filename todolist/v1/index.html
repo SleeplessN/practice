@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todos v1</title>
+    <style>
+      .todo-filters {
+        display: flex;
+        gap: 20px;
+        list-style-type: none;
+      }
+      .active {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" class="todo-input" placeholder="Enter todo!" />
+    <ul class="todo-list"></ul>
+    <ul class="todo-filters">
+      <li id="all" class="active">All</li>
+      <li id="completed">Completed</li>
+      <li id="active">Active</li>
+    </ul>
+    <script>
+      let state = {
+        todos: [],
+        filterId: 'all',
+      };
+
+      const $todoInput = document.querySelector('.todo-input');
+      const $todoList = document.querySelector('.todo-list');
+      const $todoFilters = document.querySelector('.todo-filters');
+
+      const render = () => {
+        const { todos, filterId } = state;
+        console.log('[STATE]', state.todos);
+        const _todos = todos.filter(todo =>
+          filterId === 'completed' ? todo.completed : filterId === 'active' ? !todo.completed : true
+        );
+        // prettier-ignore
+        $todoList.innerHTML = _todos.map(({ id, content, completed }) => `
+          <li id="${id}">
+            <input type='checkbox' ${completed ? 'checked' : ''}>
+            <span>${content}</span>
+            <button class="todo-remove">X</button>
+          </li>`
+          )
+          .join('');
+      };
+      const generateNextID = () => Math.max(...state.todos.map(todo => todo.id), 0) + 1;
+
+      const setState = newState => {
+        state = { ...state, ...newState };
+        render();
+      };
+
+      const fetchTodos = () => {
+        setState({
+          todos: [
+            { id: 3, content: 'Javascript', completed: false },
+            { id: 2, content: 'CSS', completed: true },
+            { id: 1, content: 'HTML', completed: false },
+          ],
+        });
+      };
+
+      const addTodo = content => {
+        setState({ todos: [{ id: generateNextID(), content, completed: false }, ...state.todos] });
+      };
+
+      const toggleTodoCompleted = id => {
+        setState({
+          todos: state.todos.map(todo => (todo.id === +id ? { ...todo, completed: !todo.completed } : todo)),
+        });
+      };
+
+      const removeTodo = id => {
+        setState({ todos: state.todos.filter(todo => todo.id !== +id) });
+      };
+
+      // Event handlers
+      window.addEventListener('DOMContentLoaded', () => {
+        fetchTodos();
+      });
+
+      $todoInput.addEventListener('keyup', e => {
+        const content = $todoInput.value.trim();
+        if (e.key !== 'Enter' || content === '') return;
+        addTodo(content);
+        $todoInput.value = '';
+      });
+
+      $todoList.addEventListener('change', e => {
+        toggleTodoCompleted(e.target.parentNode.id);
+      });
+
+      $todoList.addEventListener('click', e => {
+        if (!e.target.matches('.todo-remove')) return;
+        removeTodo(e.target.parentNode.id);
+      });
+
+      $todoFilters.addEventListener('click', e => {
+        if (e.target === $todoFilters) return;
+        [...e.target.children].forEach(filter => filter.classList.toggle('active'));
+        setState({ filterId: e.target.id });
+      });
+    </script>
+  </body>
+</html>
